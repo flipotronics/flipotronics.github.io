@@ -70,7 +70,15 @@
         <a href="http://jackaudio.org/">Jack Audio Connection Kit</a><br/>
         <a href="https://www.get-edi.io/Real-Time-Linux-on-the-Raspberry-Pi">real-time-linux-on Raspberry Pi</a><br/>
         <a href="https://lemariva.com/blog/2018/07/raspberry-pi-preempt-rt-patching-tutorial-for-kernel-4-14-y">Install Preempt-RT Kernel</a><br/>
-        <a href="https://www.get-edi.io/Cross-Compiling-for-Raspbian/">Cross Compiling For Raspbian</a><br/><br/>
+        <a href="https://www.get-edi.io/Cross-Compiling-for-Raspbian/">Cross Compiling For Raspbian</a><br/>
+        <a href=" href="https://flipotronics.com/res/rt-kernel.tgz">rt-kernel.tgz</a><br/><br/>
+        
+        make ARCH=arm bcm2709_defconfig<br/>
+        sudo apt-get install libncurses5-dev libncursesw5-dev<br/>
+        make menuconfig<br/>
+         DEPMOD  4.14.91-rt49-v7+
+        
+        
         <h3>stage 3 - Power Supply</h3>
         <p>Euro Rack specification: +12V, -12V, +5V</p>
         Design by benguru: <a href="https://www.instructables.com/id/Eurorack-Synthesizer-Power-Supply/">Eurorack Synthesizer Power Supply</a><br/>
