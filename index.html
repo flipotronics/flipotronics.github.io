@@ -1,69 +1,130 @@
 <!DOCTYPE html>
-<html lang="en-us">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    
-    <title>Flipotronics </title>
-    <meta name="HandheldFriendly" content="True">
-    <meta name="MobileOptimized" content="320">
-    <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.54.0" />
-    
-      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
-      <link href="/dist/css/app.955516233bcafa4d2a1c13cea63c7b50.css" rel="stylesheet">
-      <link href="https://flipotronics.com/index.xml" rel="alternate" type="application/rss+xml" title="Flipotronics" />
-      <link href="https://flipotronics.com/index.xml" rel="feed" type="application/rss+xml" title="Flipotronics" />
-    
+<html>
 
-    <meta property="og:title" content="Flipotronics" />
-<meta property="og:description" content="" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://flipotronics.com/" />
+<head>
+  <title>Flipotronics modular DIY synthesizer</title>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- css -->
+  <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+  <link href="css/style.css" rel="stylesheet" media="screen">
+  <link href="color/default.css" rel="stylesheet" media="screen">
+  <script src="js/modernizr.custom.js"></script>
+</head>
 
-<meta itemprop="name" content="Flipotronics">
-<meta itemprop="description" content="">
-
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Flipotronics"/>
-<meta name="twitter:description" content=""/>
-
-  </head>
-
-  <body class="ma0 avenir bg-near-white">
-
-    
-
-  <header>
-    <div class="pb3-m pb6-l bg-black">
-      <nav class="pv3 ph3 ph4-ns" role="navigation">
-  <div class="flex-l justify-between items-center center">
-    <a href="https://flipotronics.com" class="f3 fw2 hover-white no-underline white-90 dib">
-      Flipotronics Synth DIY
-    </a>
-    <div class="flex-l items-center">
-      
+<body>
+  <div class="menu-area">
+    <div id="dl-menu" class="dl-menuwrapper">
+      <button class="dl-trigger">Open Menu</button>
+      <ul class="dl-menu">
+        <li>
+          <a href="#intro">Home</a>
+        </li>
+        <li><a href="#box">Box</a></li>
+        <li><a href="#os"> OS for Raspberry Pi 3 Model B+</a></li>
+        <li><a href="#power">Power</a></li>
+        <li><a href="#components">Components</a></li>
+        <li><a href="#roadmap">Roadmap</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
     </div>
+    <!-- /dl-menuwrapper -->
   </div>
-</nav>
 
-      <div class="tc-l pv3 ph3 ph4-ns">
-        <h1 class="f2 f-subheadline-l fw2 light-silver mb0 lh-title">
-          Flipotronics A1
-        </h1>
-        <div style="background-color:white;">
-        <h2>Building a semi-modular synthesizer, based on Raspberry Pi and Curtis CEM3340 VCO and analog filters.</h2>
-        
-        <h3>stage 1 - box</h3>
-        <img src="images/synth0.png" height=320  width=240 /><br/>
-        
-        Wood and color: <a href="homedepot.comhttp://">The Homedepot</a><br/>
+  <!-- intro area -->
+  <div id="intro">
+
+    <div class="intro-text">
+      <div class="container">
+        <div class="row">
+
+
+          <div class="col-md-12">
+
+            <div class="brand">
+              <h1><a href="index.html">Flipotronics<br/>modular<br/>DIY<br/>synthesizer<br/>A1</a></h1>
+              <div class="line-spacer"></div>
+              <p><span></span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- Box -->
+  <section id="box" class="home-section bg-white">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-offset-2 col-md-8">
+          <div class="section-heading">
+            <h2>Step 1   -   Box</h2>
+            <p>
+            Wood and color: <a href="homedepot.comhttp://">The Homedepot</a><br/>
         Euro Rack brackets 19 inch <a href="https://www.synthrotek.com/">Synthrotek</a><br/>
         CAD software: <a href="https://www.openscad.org/">OpenSCAD</a><br/>
         Model: <a target="_blank" href="https://flipotronics.com/res/Flipotronics_A1_box.scad">Flipotronics_A1_box.scad</a><br/>
         Keyboard: <a href="https://www.akaipro.com/lpk25-lpk25">Akai LPK25</a><br/><br/>
-         
-        <h3>stage 2 - OS for Raspberry Pi 3 Model B+</h3>
+        </p>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+          <div class="box-team wow bounceInDown" data-wow-delay="0.1s">
+            <img src="img/synth0.png" alt="" class="img-responsive" />
+            <h4>Wood and Eurorack brackets</h4>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3" data-wow-delay="0.3s">
+          <div class="box-team wow bounceInDown">
+            <img src="img/synth1.png" alt="" class="img-responsive" />
+            <h4>Painted</h4>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3" data-wow-delay="0.5s">
+          <div class="box-team wow bounceInDown">
+            <img src="img/synth2.png" alt="" class="img-responsive" />
+            <h4>OpenSCAD Model</h4>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3" data-wow-delay="0.7s">
+          <div class="box-team wow bounceInDown">
+            <img src="img/synth3.png" alt="" class="img-responsive" />
+            <h4>Synthrotek Euro Brackets</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+	
+  <section id="spacer1" class="home-section spacer">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="color-light">
+            <h2 class="wow bounceInDown" data-wow-delay="1s">Open Source   -   DIY    - Maker   -   Builder</h2>
+            <p class="lead wow bounceInUp" data-wow-delay="2s">DIY Synthesizer   -   Digital    -   Analog   -   Open</p><br/>
+            <p class="lead wow bounceInUp" data-wow-delay="2s">Alsa   -   Jack   -   FluidSynth  -   Curtis CEM3340   -   Raspberry Pi   -   Linux Preempt_RT Kernel   -  OTA updates   -   Community</p>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- stage 2 - OS for Raspberry Pi 3 Model B+ -->
+  <section id="os" class="home-section bg-white">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-offset-2 col-md-8">
+          <div class="section-heading">
+            <h2>Step 2   -   OS for Raspberry Pi 3 Model B+</h2>
+            <p>Low latency: Build of a PREEMPT_RT patched kernel for Raspberry Pi Model 3 B+</p>
+            <p>        
         <a HREF="https://www.raspberrypi.org/">Raspberry Pi</a></br>
         <a href="https://wiki.linuxaudio.org/wiki/raspberrypi">wiki.linuxaudio.org/wiki/raspberrypi</a><br/>
         <a href="https://www.alsa-project.org">AlsaProject</a><br/>
@@ -76,37 +137,341 @@
         make ARCH=arm bcm2709_defconfig<br/>
         sudo apt-get install libncurses5-dev libncursesw5-dev<br/>
         make menuconfig<br/>
-         DEPMOD  4.14.91-rt49-v7+
-        
-        
-        <h3>stage 3 - Power Supply</h3>
-        <p>Euro Rack specification: +12V, -12V, +5V</p>
-        Design by benguru: <a href="https://www.instructables.com/id/Eurorack-Synthesizer-Power-Supply/">Eurorack Synthesizer Power Supply</a><br/>
-        PCB <a HREF="https://www.pcbway.com/">PCBWay</a></br>
-        Schema: <a href="https://flipotronics.com/res/PowerSupply.pdf">PowerSupply.pdf</a></br>
-        Gerber files: <a href="https://flipotronics.com/res/gerber.zip">gerber.zip</a></br>
-        
-        <br/><br/><br/><br/>
+         DEPMOD  4.14.91-rt49-v7+</p>
+          </div>
+        </div>
+      </div>
+      
+      <!--
+      <div class="row">
+        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+          <div class="service-box wow bounceInDown" data-wow-delay="0.1s">
+            <i class="fa fa-code fa-4x"></i>
+            <h4>Valid HTML5</h4>
+            <p>Lorem ipsum dolor sit amet, ut decore iracundia urbanitas sit.</p>
+            <a class="btn btn-primary">Learn more</a>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3" data-wow-delay="0.3s">
+          <div class="service-box wow bounceInDown" data-wow-delay="0.1s">
+            <i class="fa fa-cog fa-4x"></i>
+            <h4>Easy to Customize</h4>
+            <p>Lorem ipsum dolor sit amet, ut decore iracundia urbanitas sit.</p>
+            <a class="btn btn-primary">Learn more</a>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3" data-wow-delay="0.5s">
+          <div class="service-box wow bounceInDown" data-wow-delay="0.1s">
+            <i class="fa fa-desktop fa-4x"></i>
+            <h4>Responsive Layout</h4>
+            <p>Lorem ipsum dolor sit amet, ut decore iracundia urbanitas sit.</p>
+            <a class="btn btn-primary">Learn more</a>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3" data-wow-delay="0.7s">
+          <div class="service-box wow bounceInDown" data-wow-delay="0.1s">
+            <i class="fa fa-dropbox fa-4x"></i>
+            <h4>Ready to use</h4>
+            <p>Lorem ipsum dolor sit amet, ut decore iracundia urbanitas sit.</p>
+            <a class="btn btn-primary">Learn more</a>
+          </div>
+          
+          -->
         </div>
       </div>
     </div>
-  </header>
-    <main class="pb7" role="main">
-      
-   <article class="cf ph3 ph5-l pv3 pv4-l f4 tc-l center measure-wide lh-copy mid-gray">
-   </article>
+  </section>
   
-    </main>
-    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
-  <div class="flex justify-between">
-  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://flipotronics.com" >
-    &copy; 2019 Flipotronics
-  </a>
-    <div>
+    <!-- stage 3 - OS for Raspberry Pi 3 Model B+ -->
+  <section id="power" class="home-section bg-white">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-offset-2 col-md-8">
+          <div class="section-heading">
+            <h2>Step 3   -  Power Supply</h2>
+            <p>Euro Rack specification: +12V, -12V, +5V</p>
+        Design by benguru: <a href="https://www.instructables.com/id/Eurorack-Synthesizer-Power-Supply/">Eurorack Synthesizer Power Supply</a><br/>
+        PCB <a HREF="https://www.pcbway.com/">PCBWay</a></br>
+        Schema: <a href="https://flipotronics.com/res/PowerSupply.pdf">PowerSupply.pdf</a></br>
+        Gerber files: <a href="https://flipotronics.com/res/gerber.zip">gerber.zip</a></br></p>
+          </div>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-</div>
-  </div>
-</footer>
-  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
-  </body>
+  <!-- Works 
+  <section id="works" class="home-section bg-gray">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-offset-2 col-md-8">
+          <div class="section-heading">
+            <h2>Works</h2>
+            <p>Dicunt tamquam dissentiet vix ex, ne mei dico reformidans, accumsan gloriatur necessitatibus eu sit.</p>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-offset-2 col-md-8">
+
+          <ul class="lb-album">
+            <li>
+              <a href="#image-1">
+								<img src="img/works/thumbs/1.jpg" alt="">
+								<span>+</span>
+							</a>
+              <div class="lb-overlay" id="image-1">
+                <a href="#page" class="lb-close">X</a>
+                <img src="img/works/1.jpg" alt="" />
+                <div>
+                  <h3>Sleek <span>/Design/</span></h3>
+                  <p>Lorem ipsum dolor sit amet, ut decore iracundia urbanitas sit.</p>
+                </div>
+
+              </div>
+            </li>
+            <li>
+              <a href="#image-2">
+								<img src="img/works/thumbs/2.jpg" alt="">
+								<span>+</span>
+							</a>
+              <div class="lb-overlay" id="image-2">
+                <a href="#page" class="lb-close">x Close</a>
+                <img src="img/works/2.jpg" alt="" />
+                <div>
+                  <h3>Sleek <span>/Design/</span></h3>
+                  <p>Lorem ipsum dolor sit amet, ut decore iracundia urbanitas sit.</p>
+                </div>
+
+              </div>
+            </li>
+            <li>
+              <a href="#image-3">
+								<img src="img/works/thumbs/3.jpg" alt="">
+								<span>+</span>
+							</a>
+              <div class="lb-overlay" id="image-3">
+                <a href="#page" class="lb-close">x Close</a>
+                <img src="img/works/3.jpg" alt="" />
+                <div>
+                  <h3>Sleek <span>/Design/</span></h3>
+                  <p>Lorem ipsum dolor sit amet, ut decore iracundia urbanitas sit.</p>
+                </div>
+
+              </div>
+            </li>
+            <li>
+              <a href="#image-4">
+								<img src="img/works/thumbs/4.jpg" alt="">
+								<span>+</span>
+							</a>
+              <div class="lb-overlay" id="image-4">
+                <a href="#page" class="lb-close">x Close</a>
+                <img src="img/works/4.jpg" alt="" />
+                <div>
+                  <h3>Sleek <span>/Design/</span></h3>
+                  <p>Lorem ipsum dolor sit amet, ut decore iracundia urbanitas sit.</p>
+                </div>
+
+              </div>
+            </li>
+
+            <li>
+              <a href="#image-5">
+								<img src="img/works/thumbs/5.jpg" alt="">
+								<span>+</span>
+							</a>
+              <div class="lb-overlay" id="image-5">
+                <a href="#page" class="lb-close">X</a>
+                <img src="img/works/5.jpg" alt="" />
+                <div>
+                  <h3>Sleek <span>/Design/</span></h3>
+                  <p>Lorem ipsum dolor sit amet, ut decore iracundia urbanitas sit.</p>
+                </div>
+
+              </div>
+            </li>
+            <li>
+              <a href="#image-6">
+								<img src="img/works/thumbs/6.jpg" alt="">
+								<span>+</span>
+							</a>
+              <div class="lb-overlay" id="image-6">
+                <a href="#page" class="lb-close">x Close</a>
+                <img src="img/works/6.jpg" alt="" />
+                <div>
+                  <h3>Sleek <span>/Design/</span></h3>
+                  <p>Lorem ipsum dolor sit amet, ut decore iracundia urbanitas sit.</p>
+                </div>
+
+              </div>
+            </li>
+            <li>
+              <a href="#image-7">
+								<img src="img/works/thumbs/7.jpg" alt="">
+								<span>+</span>
+							</a>
+              <div class="lb-overlay" id="image-7">
+                <a href="#page" class="lb-close">x Close</a>
+                <img src="img/works/7.jpg" alt="" />
+                <div>
+                  <h3>Sleek <span>/Design/</span></h3>
+                  <p>Lorem ipsum dolor sit amet, ut decore iracundia urbanitas sit.</p>
+                </div>
+
+              </div>
+            </li>
+            <li>
+              <a href="#image-8">
+								<img src="img/works/thumbs/8.jpg" alt="">
+								<span>+</span>
+							</a>
+              <div class="lb-overlay" id="image-8">
+                <a href="#page" class="lb-close">x Close</a>
+                <img src="img/works/8.jpg" alt="" />
+                <div>
+                  <h3>Sleek <span>/Design/</span></h3>
+                  <p>Lorem ipsum dolor sit amet, ut decore iracundia urbanitas sit.</p>
+                </div>
+
+              </div>
+            </li>
+          </ul>
+
+        </div>
+      </div>
+    </div>
+  </section>
+  -->
+
+  <!-- spacer 2 -->
+  <section id="spacer2" class="home-section spacer">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="color-light">
+            <h2 class="wow bounceInDown" data-wow-delay="1s">Open Source   -   DIY    - Maker   -   Builder</h2>
+            <p class="lead wow bounceInUp" data-wow-delay="2s">DIY Synthesizer   -   Digital    -   Analog   -   Open</p><br/>
+            <p class="lead wow bounceInUp" data-wow-delay="2s">Alsa   -   Jack   -   FluidSynth  -   Curtis CEM3340   -   Raspberry Pi   -   Linux Preempt_RT Kernel   -  OTA updates   -   Community</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  </section>
+
+
+  <section id="components" class="home-section bg-white">
+    <div class="container">
+      <div class="row">
+        <img src="img/Flipotronics_A1.png" width=1200 alt="Flipotronics A1 architecture" />
+      </div>
+    </div>
+  </section>
+  
+  <section id="roadmap" class="home-section bg-white">
+    <div class="container">
+      <div class="row">
+        <p>Roadmap:</p><br/>
+        <p>Power Supply   -   GPIO Expander   -  Push Buttons   -   Rotary Encoders   - TFT Display   -   7Segement Display   -   Midi   -   DAC    -   ADC   -   Headhphone Amp</p><br/>
+        <p>Euro Modules: Curtis VCO   -   VCF   -  VCA    </p><br/>
+        <p>Digital Wavegenerator: FluidSynth   -  DX7   - Synth1    - Drums    -  Organ    -   Piano</p><br/>
+        <p>Fliptronics Synth Archive Manager -   NodeJS   -  React   -   Redis  -   MongoDB</p></br/>
+        <p>OSCTouch remote screen   -   WebAdmin   -   OTA upgrades  Docker   -   Community Portal on GCP Firebase</p><br/>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Contact -->
+  <section id="contact" class="home-section bg-white">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-offset-2 col-md-8">
+          <div class="section-heading">
+            <h2>Contact us</h2>
+            <p><a href="mailto:mathias.dietrich@gmail.com">Please email to mathias.dietrich@gmail.com</a></p>
+          </div>
+        </div>
+      </div>
+
+<!--
+      <div class="row">
+        <div class="col-md-offset-2 col-md-8">
+          <div id="sendmessage">Your message has been sent. Thank you!</div>
+          <div id="errormessage"></div>
+          <form action="" method="post" role="form" class="contactForm">
+            <div class="form-group">
+              <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars" />
+              <div class="validation"></div>
+            </div>
+            <div class="form-group">
+              <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email" />
+              <div class="validation"></div>
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" data-rule="minlen:4" data-msg="Please enter at least 8 chars of subject" />
+              <div class="validation"></div>
+            </div>
+            <div class="form-group">
+              <textarea class="form-control" name="message" rows="5" data-rule="required" data-msg="Please write something for us" placeholder="Message"></textarea>
+              <div class="validation"></div>
+            </div>
+
+            <div class="text-center"><button type="submit" class="btn btn-theme btn-lg btn-block">Send Message</button></div>
+          </form>
+          -->
+
+
+        </div>
+      </div>
+      <div class="row mar-top30 ">
+        <div class="col-md-offset-2 col-md-8">
+          <h5>Repositories</h5>
+          <ul class="social-network">
+            <li><a href="https://github.com/flipotronics">
+						<span class="fa-stack fa-2x">
+							<i class="fa fa-circle fa-stack-2x"></i>
+							<i class="fa fa-github fa-stack-1x fa-inverse"></i>
+						</span></a>
+            </li>
+            <li><a href="https://hub.docker.com/u/flipotronics">
+						<span class="fa-stack fa-2x">
+							<i class="fa fa-circle fa-stack-2x"></i>
+							<i class="fa fa-dockerhub fa-stack-1x fa-inverse"></i>
+						</span></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <p>&copy; Flipotronics, San Jose, 5/10/2019, California, US.  All Rights Reserved</p>
+          <div class="credits">Graphic site design by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- js -->
+  <script src="js/jquery.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/jquery.smooth-scroll.min.js"></script>
+  <script src="js/jquery.dlmenu.js"></script>
+  <script src="js/wow.min.js"></script>
+  <script src="js/custom.js"></script>
+  <script src="contactform/contactform.js"></script>
+
+</body>
+
 </html>
