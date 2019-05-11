@@ -210,33 +210,33 @@ All this is done for any sub-level being entered.
 /* Animation classes for moving out and in */
 
 .dl-menu.dl-animate-out-1 {
-	-webkit-animation: MenuAnimOut1 0.4s;
-	-moz-animation: MenuAnimOut1 0.4s;
-	animation: MenuAnimOut1 0.4s;
+	-webkit-animation: MenuAnimOut1 0.2s;
+	-moz-animation: MenuAnimOut1 0.2s;
+	animation: MenuAnimOut1 0.2s;
 }
 
 .dl-menu.dl-animate-out-2 {
-	-webkit-animation: MenuAnimOut2 0.3s ease-in-out;
-	-moz-animation: MenuAnimOut2 0.3s ease-in-out;
-	animation: MenuAnimOut2 0.3s ease-in-out;
+	-webkit-animation: MenuAnimOut2 0.2s ease-in-out;
+	-moz-animation: MenuAnimOut2 0.2s ease-in-out;
+	animation: MenuAnimOut2 0.2s ease-in-out;
 }
 
 .dl-menu.dl-animate-out-3 {
-	-webkit-animation: MenuAnimOut3 0.4s ease;
-	-moz-animation: MenuAnimOut3 0.4s ease;
-	animation: MenuAnimOut3 0.4s ease;
+	-webkit-animation: MenuAnimOut3 0.2s ease;
+	-moz-animation: MenuAnimOut3 0.2s ease;
+	animation: MenuAnimOut3 0.2s ease;
 }
 
 .dl-menu.dl-animate-out-4 {
-	-webkit-animation: MenuAnimOut4 0.4s ease;
-	-moz-animation: MenuAnimOut4 0.4s ease;
-	animation: MenuAnimOut4 0.4s ease;
+	-webkit-animation: MenuAnimOut4 0.2s ease;
+	-moz-animation: MenuAnimOut4 0.2s ease;
+	animation: MenuAnimOut4 0.2s ease;
 }
 
 .dl-menu.dl-animate-out-5 {
-	-webkit-animation: MenuAnimOut5 0.4s ease;
-	-moz-animation: MenuAnimOut5 0.4s ease;
-	animation: MenuAnimOut5 0.4s ease;
+	-webkit-animation: MenuAnimOut5 0.2s ease;
+	-moz-animation: MenuAnimOut5 0.2s ease;
+	animation: MenuAnimOut5 0.2s ease;
 }
 
 @-webkit-keyframes MenuAnimOut1 {
