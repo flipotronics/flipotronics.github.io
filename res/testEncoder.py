@@ -102,6 +102,7 @@ try:
         counter0 += 1
       else:
         counter0 -= 1
+        print ("encoder 0: ")
         print (counter0)
         clkLastState0 = clkState0
 
@@ -112,6 +113,7 @@ try:
         counter1 += 1
       else:
         counter1 -= 1
+        print ("encoder 1: ")
         print (counter1)
         clkLastState1 = clkState1
 
@@ -122,6 +124,7 @@ try:
         counter2 += 1
       else:
         counter2 -= 1
+        print ("encoder 2: ")
         print (counter2)
         clkLastState2 = clkState2
 
@@ -132,6 +135,7 @@ try:
         counter3 += 1
       else:
         counter3 -= 1
+        print ("encoder 3: ")
         print (counter3)
         clkLastState3 = clkState3
 
@@ -142,6 +146,7 @@ try:
         counter4 += 1
       else:
         counter4 -= 1
+        print ("encoder 4: ")
         print (counter4)
         clkLastState4 = clkState4
     
@@ -152,6 +157,7 @@ try:
         counter5 += 1
       else:
         counter5 -= 1
+        print ("encoder 5: ")
         print (counter5)
         clkLastState5 = clkState5  
 
@@ -162,6 +168,7 @@ try:
         counter6 += 1
       else:
         counter6 -= 1
+        print ("encoder 6: ")
         print (counter6)
         clkLastState6 = clkState6
 
@@ -172,6 +179,7 @@ try:
         counter7 += 1
       else:
         counter7 -= 1
+        print ("encoder 7: ")
         print (counter7)
         clkLastState7 = clkState7
 
