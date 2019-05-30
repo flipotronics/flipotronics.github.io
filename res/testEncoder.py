@@ -20,18 +20,25 @@ mcp = MCP23017(i2c)  # MCP23017
 # 0 to 15 for the GPIOA0...GPIOA7, GPIOB0...GPIOB7 pins (i.e. pin 12 is GPIOB4).
 clk0  = mcp.get_pin(0)
 dt0 = mcp.get_pin(1)
+
 clk1  = mcp.get_pin(2)
 dt1 = mcp.get_pin(3)
+
 clk2  = mcp.get_pin(4)
 dt2 = mcp.get_pin(5)
+
 clk3  = mcp.get_pin(6)
 dt3 = mcp.get_pin(7)
+
 clk4  = mcp.get_pin(8)
 dt4 = mcp.get_pin(9)
+
 clk5  = mcp.get_pin(10)
 dt5 = mcp.get_pin(11)
+
 clk6  = mcp.get_pin(12)
 dt6 = mcp.get_pin(13)
+
 clk7  = mcp.get_pin(14)
 dt7 = mcp.get_pin(15)
 
@@ -76,20 +83,21 @@ dt7.direction = digitalio.Direction.INPUT
 dt7.pull = digitalio.Pull.UP
 
 counter0 = 0
+counter1 = 0
+counter2 = 0
+counter3 = 0
+counter4 = 0
+counter5 = 0
+counter6 = 0
+counter7 = 0
+
 clkLastState0 = clk0.value
-counter1 = 1
 clkLastState1 = clk1.value
-counter2 = 2
 clkLastState2 = clk2.value
-counter3 = 3
 clkLastState3 = clk3.value
-counter4 = 4
 clkLastState4 = clk4.value
-counter5 = 5
 clkLastState5 = clk5.value
-counter6 = 6
 clkLastState6 = clk6.value
-counter7 = 7
 clkLastState7 = clk7.value
 
 try:

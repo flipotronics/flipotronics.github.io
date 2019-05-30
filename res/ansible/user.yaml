@@ -1,0 +1,11 @@
+---
+- hosts: pi
+  remote_user: pi
+  become: yes
+  become_method: sudo
+  tasks:
+  - name: Create user
+    user: name=pi shell=/bin/bash home=/home/pi groups=admin,sudo generate_ssh_key=yes ssh_key_bits=2048
+  - name: Set password to raspberry
+    shell: echo user:plain_text_password | sudo chpasswd
+    no_log: True

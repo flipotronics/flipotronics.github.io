@@ -1,0 +1,20 @@
+---
+- hosts: pi
+  become: yes  
+  tasks:
+  - name: install tcl package
+    apt:
+      name:
+      - tcl
+      - tk
+      - telnet
+      - jack-tools
+      - fftw3 
+      - qjackctl
+      - qsynth
+      - python3-dev
+      - libffi-dev
+      - libssl-dev
+      state: latest
+      cache_valid_time: 3600    # update cache if more than an hour old
+    

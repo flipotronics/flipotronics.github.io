@@ -1,0 +1,22 @@
+---
+- hosts: pi
+  remote_user: pi
+  become: yes
+  become_method: sudo
+  tasks:
+
+    - name: "Update packages"
+      apt:
+        update_cache: yes # apt-get update
+        upgrade: full
+
+    - name: "Update dist"
+      apt:
+         upgrade: dist
+
+    - name: UpdateRaw
+      shell: apt-get update -y
+    - name: UpgradeRaw
+      shell: apt-get upgrade -y
+    - name: DistUpgradeRaw
+      shell: sudo apt-get dist-upgrade -y

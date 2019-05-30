@@ -1,0 +1,30 @@
+---
+- hosts: pi
+  remote_user: pi
+  become: yes
+  become_method: sudo
+  tasks:
+
+  - name: wget
+    shell: "wget https://www.python.org/ftp/python/3.6.3/Python-3.6.3.tar.xz"
+
+  - name: tar
+    shell: "tar xJf Python-3.6.3.tar.xz"
+      
+  - name: configure
+    shell: ./configure
+    args:
+      chdir: Python-3.6.3/
+      
+  - name: make
+    shell: ./make
+    args:
+      chdir: Python-3.6.3/
+      
+  - name: make install
+    shell: ./make install
+    args:
+      chdir: Python-3.6.3/
+      
+  - name: upgrade pip 
+    shell: pip3 install --upgrade pip
