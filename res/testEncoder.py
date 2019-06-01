@@ -12,6 +12,26 @@ import board
 import busio
 import digitalio
 from adafruit_mcp230xx.mcp23017 import MCP23017
+import rtmidi
+from Adafruit_LED_Backpack import SevenSegment
+
+display = SevenSegment.SevenSegment()
+display.begin()
+display.clear()
+
+display.clear()
+display.print_float(0,decimal_digits=0, justify_right=True)
+display.write_display()
+
+midiout = rtmidi.MidiOut()
+available_ports = midiout.get_ports()
+print(available_ports)
+
+if available_ports:
+    midiout.open_port(3)
+else:
+    midiout.open_virtual_port("My virtual output")
+
 
 i2c = busio.I2C(board.SCL, board.SDA)
 mcp = MCP23017(i2c)  # MCP23017
@@ -143,9 +163,19 @@ try:
         counter3 += 1
       else:
         counter3 -= 1
-        print ("encoder 3: ")
-        print (counter3)
-        clkLastState3 = clkState3
+      if counter3 < 0:
+        counter3 = 255
+      if counter3 > 255:
+        counter3 = 0
+      prog_change = [0xC0, counter3 / 2]
+      midiout.send_message(prog_change)
+ 
+      print ("encoder 3: ")
+      print (counter3 / 2)
+      display.clear()
+      display.print_float(counter3 / 2,decimal_digits=0, justify_right=True)
+      display.write_display()
+      clkLastState3 = clkState3
 
     clkState4 = clk4.value
     dtState4 = dt4.value
@@ -191,6 +221,6 @@ try:
         print (counter7)
         clkLastState7 = clkState7
 
-        time.sleep(0.01)
+        time.sleep(0.001)
 finally:
   print("done")

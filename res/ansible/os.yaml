@@ -4,6 +4,9 @@
   become: yes
   become_method: sudo
   tasks:
+  
+    - name: rpi-update
+      shell: "rpi-update -y"
 
     - name: "Update packages"
       apt:

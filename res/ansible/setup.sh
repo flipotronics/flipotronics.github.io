@@ -7,15 +7,26 @@ PWD=${PWD:-raspberry}
 echo
 echo "starting install"
 
-ansible-playbook -i $ANSIBLE_HOSTS --extra-vars "ansible_user=pi ansible_password=$PWD" raspi.yaml
+# TODO - Playbook has bugs
+#ansible-playbook -i $ANSIBLE_HOSTS --extra-vars "ansible_user=pi ansible_password=$PWD" raspi.yaml
 
-ansible-playbook -i $ANSIBLE_HOSTS  user.yaml
+# don't need this
+# ansible-playbook -i $ANSIBLE_HOSTS  user.yaml
 
-#ansible-playbook -i $ANSIBLE_HOSTS --extra-vars "ansible_user=pi ansible_password=$PWD" os.yaml
+# now based on image fixing above - also TFT consol boot is enabled
 
-#ansible-playbook -i $ANSIBLE_HOSTS --extra-vars "ansible_user=pi ansible_password=$PWD" packages.yaml
+ansible-playbook -i $ANSIBLE_HOSTS --extra-vars "ansible_user=pi ansible_password=$PWD" os.yaml
 
-#ansible-playbook -i $ANSIBLE_HOSTS --extra-vars "ansible_user=pi ansible_password=$PWD" python3.yaml
+ansible-playbook -i $ANSIBLE_HOSTS --extra-vars "ansible_user=pi ansible_password=$PWD" packages.yaml
+
+ansible-playbook -i $ANSIBLE_HOSTS --extra-vars "ansible_user=pi ansible_password=$PWD" python3.yaml
+
+# check jack and QSynth
+
+# Next: deploy SF and start scripts
+
+
+
 
 
 

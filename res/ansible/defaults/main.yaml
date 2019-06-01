@@ -1,3 +1,6 @@
+
+# https://github.com/mikolak-net/ansible-raspi-config/blob/master/README.md
+
 # perform full update+upgrade
 raspi_config_update_packages: yes
 # have the FS fill the SD card
@@ -25,6 +28,6 @@ raspi_config_replace_user:
   name:
   path_to_ssh_key: #LOCAL path to your public key file
 # wait this many seconds before forcing connection retry after reboot
-raspi_config_reboot_max_wait_time: 300
+raspi_config_reboot_max_wait_time: 400
 # use this to add any additional options to the config in raw form
 raspi_config_other_options: {}

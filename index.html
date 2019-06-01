@@ -24,11 +24,14 @@
         </li>
         <li><a href="#box">Box</a></li>
         <li><a href="#os"> OS for Raspberry Pi 3 Model B+</a></li>
+        <li><a href="#tftdisplay">TFT Display</a></li>
+        <li><a href="#backup">Backup</a></li>
+        <li><a href="#pythonlibs">Python Libs</a></li>
         <li><a href="#power">Power</a></li>
         <li><a href="#frontpanel">Frontpanel</a></li>
         <li><a href="#architecture">Architecture</a></li>
         <li><a href="#roadmap">Roadmap</a></li>
-	<li><a href="#references">References</a></li>
+	      <li><a href="#references">References</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
 	   
@@ -128,17 +131,37 @@
         <div class="col-md-offset-2 col-md-8">
           <div class="section-heading">
             <h2>Step 2   -   OS for Raspberry Pi 3 Model B+</h2>
-            <p>Low latency: Build of a PREEMPT_RT patched kernel for Raspberry Pi Model 3 B+</p>
-            <p>        
-        <a HREF="https://www.raspberrypi.org/">Raspberry Pi</a></br>
-        <a href="https://wiki.linuxaudio.org/wiki/raspberrypi">wiki.linuxaudio.org/wiki/raspberrypi</a><br/>
-        <a href="https://www.alsa-project.org">AlsaProject</a><br/>
-        <a href="http://jackaudio.org/">Jack Audio Connection Kit</a><br/>
-        <a href="https://www.get-edi.io/Real-Time-Linux-on-the-Raspberry-Pi">real-time-linux-on Raspberry Pi</a><br/>
-        <a href="https://lemariva.com/blog/2018/07/raspberry-pi-preempt-rt-patching-tutorial-for-kernel-4-14-y">Install Preempt-RT Kernel</a><br/>
-        <a href="https://www.get-edi.io/Cross-Compiling-for-Raspbian/">Cross Compiling For Raspbian</a><br/>
-        <a href=" href="https://flipotronics.com/res/rt-kernel.tgz">rt-kernel.tgz</a><br/>
-	<img src="img/linux-preemptrt.jpg" width=600/></br>
+            <p>Base image: 2019-04-08-raspbian-stretch.img   <a href="https://www.raspberrypi.org/downloads/raspbian/">raspberrypi.org</a></p>
+
+
+           <p>32Gb (or 64Gb) Micro SD - Use balenaEtcher to transfer to Micro SD</p>
+
+          <p>Setup:</p>
+          <p>run raspi-config in a terminal and update rasp-config to latest version.</p>
+          <p>use rapsi-config and setup:</b>
+          <p>Encoding: America  UTF-8</p>
+          <p>Timezone: Los Angeles</p>
+          <p>enable VNC, SPI, I2C</p>
+
+          <p>sudo rpi-update -y</p>
+          <p>sudo reboot</p>
+          <p>sudo apt-get update -y</p>
+          <p>sudo apt-get upgrade -y</p>
+          <p>sudo reboot</p>
+
+          <h3>!!</h3>
+          <p>To achieve <b>low audio latency</b> build a PREEMPT kernel:</p>
+          <p> Use PREEMPT_RT patched kernel for Raspberry Pi Model 3 B+</p>
+          <p>        
+          <a HREF="https://www.raspberrypi.org/">Raspberry Pi</a></br>
+          <a href="https://wiki.linuxaudio.org/wiki/raspberrypi">wiki.linuxaudio.org/wiki/raspberrypi</a><br/>
+          <a href="https://www.alsa-project.org">AlsaProject</a><br/>
+          <a href="http://jackaudio.org/">Jack Audio Connection Kit</a><br/>
+          <a href="https://www.get-edi.io/Real-Time-Linux-on-the-Raspberry-Pi">real-time-linux-on Raspberry Pi</a><br/>
+          <a href="https://lemariva.com/blog/2018/07/raspberry-pi-preempt-rt-patching-tutorial-for-kernel-4-14-y">Install Preempt-RT Kernel</a><br/>
+          <a href="https://www.get-edi.io/Cross-Compiling-for-Raspbian/">Cross Compiling For Raspbian</a><br/>
+          <a href=" href="https://flipotronics.com/res/rt-kernel.tgz">rt-kernel.tgz</a><br/>
+	        <img src="img/linux-preemptrt.jpg" width=600/></br>
           </div>
         </div>
       </div>
@@ -182,14 +205,162 @@
       </div>
     </div>
   </section>
+
+    <!-- stage 3 -TFT -->
+  <section id="tftdisplay" class="home-section bg-white">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-offset-2 col-md-8">
+          <div class="section-heading">
+            <h2>Step 3   -  TFT Display</h2>
+            <p>PiScreen2 by <a href="http://ozzmaker.com/">ozzmaker.com/</a></p>
+            <!--<img src="img/tft.png"/> <br/><br/>-->
+            <img src="img/piscreen3.png"/ width=600>
+            <h3>Install TFT</h3>
+            <p><b>cd ~</b></p>
+            <p style="background-color: yellow"><b>wget https://raw.githubusercontent.com/adafruit/Raspberry-Pi-Installer-Scripts/master/adafruit-pitft.sh</b></p>
+            <p><b>chmod +x adafruit-pitft.sh</b></p>
+            <p><b>sudo ./adafruit-pitft.sh</b></p>
+            <p>Use option 4 (480) and 1 for Landscape</p>
+            <p>Make the TFT mirror the HDMI display</p>
+
+            <p><b>sudo nano /boot/config.txt</b></p>
+            <p> Change to: <b>dtoverlay=piscreen2r</b></p>
+            <p>reboot PI, the PI desktop should appear on the TFT and on a screen connected to HDMI.</p><br/>
+            <p>For help visit these sites:</p>
+            <p><a href="http://ozzmaker.com/piscreen-driver-install-instructions-2/">ozzmaker</a></p>
+            <p><a href="https://learn.adafruit.com/adafruit-pitft-3-dot-5-touch-screen-for-raspberry-pi/easy-install-2">adafruit</a></p>
+
+          </div>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+   <!-- stage 4 -Py Libraries -->
+  <section id="pythonlibs" class="home-section bg-white">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-offset-2 col-md-8">
+          <div class="section-heading">
+            
+            <h2>Step 4   -  Python Libraries</h2>
+            <div style="background-color: #EEFFFF">
+            <h3>PyGame</h3>
+            <p><a href="https://www.pygame.org/docs/ref/draw.html">pygame.org</a></p>
+            <p>pre-installed in Raspberrian Stretch</p>
+            </div>
+            <br/>
+            <div style="background-color: #EEFFFF">
+            <h3>PyAudio</h3>
+            <p><a href="https://people.csail.mit.edu/hubert/pyaudio/">people.csail.mit.edu/hubert/pyaudio</a></p>
+            <p><b>sudo apt-get install libportaudio0 libportaudio2 libportaudiocpp0 portaudio19-dev -y</b></p>
+            <p><b>sudo apt-get install python3-pip</b></p>
+            <p><b>pip3 install  PyAudio</b></p>
+            </div>
+            <br/>
+            <div style="background-color: #EEFFFF">
+            <h3>PyMidi</h3>
+            <p><a href="https://github.com/mik3y/pymidi">github.com/mik3y/pymidi</a></p>
+            <p><b>pip3 install  PyMidi</b></p>
+            </div>
+            <br/>
+            <div style="background-color: #EEFFFF">
+            <h3>PyFluidSynth</h3>
+            <p><b>git clone https://github.com/nwhitehead/pyfluidsynth</b></p>
+            <p><b>cd pyfluidsynth</b></p>
+            <p><b>sudo python3 setup.py install</b></p>
+            </div>
+            <br/>
+            <div style="background-color: #EEFFFF">
+            <h3>Adafruit GPIO Expander</h3>
+            <p><a href="https://www.adafruit.com/product/4132">www.adafruit.com/product/4132</a></p>
+            <p><b>sudo pip3 install adafruit-circuitpython-mcp230xx</b></p>
+            </div>
+            <br/>
+            <div style="background-color: #EEFFFF">
+            <h3>Adafruit 7 Segment Display</h3>
+            <p><a href="https://www.adafruit.com/product/881">www.adafruit.com/product/4132</a></p>
+            <p><b>sudo apt-get install -y git build-essential python-dev python-smbus python-imaging python-pip python-pil</b></p>
+            <p><b>git clone https://github.com/adafruit/Adafruit_Python_LED_Backpack.git</b></p>
+            <p><b>cd Adafruit_Python_LED_Backpack</b></p>
+            <p><b>sudo python3 setup.py install</b></p>
+            </div>
+
+            <div style="background-color: #EEFFFF">
+            <h3>JackD</h3>
+            <p><a href="http://jackaudio.org/">jackaudio.org</a></p>
+            <p><b>sudo apt-get install jack-tools fftw3 qjackctl</b></p>
+            </div>
+
+            <div style="background-color: #EEFFFF">
+            <h3>QSynth</h3>
+            <p><a href="https://qsynth.sourceforge.io/">qsynth.sourceforge.io</a></p>
+            <p><b>sudo apt-get install fluidsynth</b></p>
+            <p><b>sudo apt-get install qsynth</b></p>
+            <p><b>sudo apt-get install fluid-soundfont-gm</b></p>
+            <p><b>sudo apt-get install fluid-soundfont-gs</b></p>
+            </div>
+            <div style="background-color: #EEFFFF">
+            <h3>flipotronics dependencies</h3>
+             <p><b>sudo apt-get install build-essential</b></p>
+            <p><b>sudo apt-get install nginx</b></p>
+			
+			<p><b>sudo pip3 install flask uwsgi</b></p>
+			<p><b>sudo apt-get install vmpk</b></p>
+			<p><b>sudo apt-get install patchage</b></p>
+			
+			<p><b>pip3 install cython</b></p>
+			<p><b>pip3 install python-rtmidi</b></p>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+    <!-- stage 5 - Backup-->
+  <section id="backup" class="home-section bg-white">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-offset-2 col-md-8">
+          <div class="section-heading">
+            <h2>Step 5 Backup</h2>
+            <p>Backup the Raspberry PI micro SD card:</p>
+            <div style="background-color: #EEFFFF">
+            <h4>Boot Partition Backup</h4>
+            <p>On Mac: Open Disk Utility from Applications/Utilities and create image from Boot.<p>
+            </p></div>
+            <div style="background-color: #EEFFFF">
+            <h4>Full Backup</h4>
+            <p>On Mac: brew install pv dialog</p>
+
+            <p>in a terminal run <b>diskutil list</b>. Find the micro SD card, for example: /dev/disk2<p>
+            <p><b>sudo dd if=/dev/disk2 bs=1m  of=~/flipotronics.iso</b><br/></p>
+            <p>monitor in a second terminal: <b>while pgrep ^dd; do sudo pkill -INFO dd; sleep 20; done</b></p>
+            <p>To restore rename to iso and use balenaEtcher to write a micro SD card.</p>
+          </div>
+          </div>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+  </section>
   
-    <!-- stage 3 - Power Supply-->
+    <!-- stage 6 - Power Supply-->
   <section id="power" class="home-section bg-white">
     <div class="container">
       <div class="row">
         <div class="col-md-offset-2 col-md-8">
           <div class="section-heading">
-            <h2>Step 3   -  Eurorack Power Supply</h2>
+            <h2>Step 6   -  Eurorack Power Supply</h2>
             <p>Eurorack specification: +12V, -12V, +5V</p>
         Design by benguru: <a href="https://www.instructables.com/id/Eurorack-Synthesizer-Power-Supply/">Eurorack Synthesizer Power Supply</a><br/>
         PCB <a HREF="https://www.pcbway.com/">PCBWay</a></br>

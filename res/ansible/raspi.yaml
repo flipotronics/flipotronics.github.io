@@ -3,6 +3,34 @@
   become: true
   roles:
      - role: mikolak-net.raspi_config
-       raspi_config_replace_user:
-         name: mat
-         path_to_ssh_key: "~/.ssh/id_rsa.pub"
+     raspi_config_update_packages: yes
+     
+     # have the FS fill the SD card
+     raspi_config_expanded_filesystem: yes
+     
+     # how much memory should be owned by the GPU (vs RAM)
+     raspi_config_memory_split_gpu: 16
+     
+     #currently sets Pi2 OC setting if applicable
+     raspi_config_ensure_optimal_cpu_params: yes
+     
+     # set global locale
+     raspi_config_locale: en_US.UTF-8
+     
+     # set timezone
+     raspi_config_timezone: PST
+     
+     # list of services that should be restarted if the timezone is changed
+     raspi_config_timezone_dependent_services: []
+    
+    # set hostname    
+    raspi_config_hostname: flipotronics
+
+    # ensure camera support is on - CURRENTLY UNVERIFIED
+    raspi_config_enable_camera: no
+    
+    # wait this many seconds before forcing connection retry after reboot
+    raspi_config_reboot_max_wait_time: 400
+    
+    # use this to add any additional options to the config in raw form
+    raspi_config_other_options: {dtoverlay=piscreen2r}
