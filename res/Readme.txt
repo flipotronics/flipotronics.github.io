@@ -119,3 +119,7 @@ note_off = [0x80, 60, 0]
 prog_change = [0xC0, 0x02] * channel 1, progr 3
 
 
+
+sudo update-alternatives --config x-session-manager
+
+
