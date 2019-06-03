@@ -203,7 +203,7 @@ class GPIOListener(object):
         prog_change = [0xC0, self.program ]
         self.midiout.send_message(prog_change)
         print(self.program)
-        time.sleep(0.05)
+       # time.sleep(0.05)
 
     # Encoder A1
     # Encoder A2
