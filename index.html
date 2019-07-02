@@ -32,7 +32,7 @@
         <li><a href="#midi">Midi</a></li>
         <li><a href="#architecture">Architecture</a></li>
         <li><a href="#softwarerchitecture">Software Architecture</a></li>
-        <li><a href="#helper">Helper</a></li>
+        <li><a href="#debug">Debug Command</a></li>
         <li><a href="#roadmap">Roadmap</a></li>
 	    <li><a href="#references">References</a></li>
         <li><a href="#contact">Contact</a></li>
@@ -435,15 +435,25 @@
       </div>
     </div>
   </section>
-  	
-  <section id="helper" class="home-section bg-white">
+  
+    <!-- stage 5 - Debug -->
+  <section id="debug" class="home-section bg-white">
     <div class="container">
-      <div class="row" style="background-color:#333333;color:white;font-size:15px;">
-      <p style="background-color:#333333;color:white;font-size:35px;"></p><br/>
-        <p style="background-color:#333333;color:white;font-size:35px;">helper:</p><br/>
-        
-        <div style="background-color:#333333;color:white;font-size:25px;">Check if I2C is enabled: ls /dev/*i2c* should show: /dev/i2c-1</div>
-        <div style="background-color:#333333;color:white;font-size:25px;">List I2C devices: i2cdetect -y 1</div>
+      <div class="row">
+        <div class="col-md-offset-2 col-md-8">
+          <div class="section-heading">
+            <h2>Debug Commands</h2>
+            <div style="background-color: #EEFFFF">
+            	<h4>Check if I2C is enabled:</h4>
+            	<p>ls /dev/*i2c* should show: /dev/i2c-1</p>
+            	<h4>List I2C devices:</h4>
+            	<p>i2cdetect -y 1<</p>
+
+          	</div>
+          </div>
+        </div>
+      </div>
+        </div>
       </div>
     </div>
   </section>
