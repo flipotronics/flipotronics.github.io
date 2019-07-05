@@ -323,6 +323,17 @@
             <p><b>sudo apt-get install mariadb-server</b></p>
             <p><b>pip3 install mysql-connector-python</b></p>
 
+            <p><b>ttymidi</b></p>p>
+            <p><b>sudo apt-get install libasound2-dev</b></p>
+            <p><b>wget http://www.varal.org/ttymidi/ttymidi.tar.gz</b></p>
+            <p><b>tar -zxvf ttymidi.tar.gz</b></p>
+            <p><b>cd ttymidi/</b></p>
+            <p><b>add -pthread to the Makefile as in: gcc src/ttymidi.c -o ttymidi -lasound -pthread</b></p>
+            <p><b>make</b></p>
+            <p><b>sudo make install</b></p>
+            <p><b>monitor midi messages: ttymidi -s /dev/serial0 -b 38400 -v</b></p>
+            <p><b>aconnect -iol  // find the ttymidi iand the fluidsynth id</b></p>
+            <p><b>aconnect 128:0 129:0</b></p>
             </div>
 
           </div>
@@ -383,10 +394,9 @@
       </div>
     </div>
   </section>
-  
-  
 
-      <!-- stage 5 -Midi-->
+
+   <!-- stage 5 -Midi-->
   <section id="midi" class="home-section bg-white">
     <div class="container">
       <div class="row">
@@ -447,8 +457,12 @@
             	<h4>Check if I2C is enabled:</h4>
             	<p>ls /dev/*i2c* should show: /dev/i2c-1</p>
             	<h4>List I2C devices:</h4>
-            	<p>i2cdetect -y 1<</p>
-
+            	<p>i2cdetect -y 1</p>
+            	<h4>Redis:</h4>
+            	<p>Get all Redis keys: redis-cli keys "*"</p>
+            	<p>Get Redis value [example prog]: redis-cli get prog</p>
+            	<p>Set Redis value [example prog]: redis-cli set prog 15</p>
+            	
           	</div>
           </div>
         </div>
