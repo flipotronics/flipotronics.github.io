@@ -6,6 +6,7 @@ import busio
 import digitalio
 from adafruit_mcp230xx.mcp23017 import MCP23017
 import redis
+import rtmidi
 import RPi.GPIO as GPIO
 from Adafruit_LED_Backpack import SevenSegment
 
@@ -70,6 +71,17 @@ HALF_STEP     = True
 STATE_TAB = HALF_TAB if HALF_STEP else FULL_TAB
 
 class GPIOListener(object):
+
+  midiout = rtmidi.MidiOut()
+  available_ports = midiout.get_ports()
+  print(available_ports)
+
+  if available_ports:
+    midiout.open_port(3)
+    print("Opened port 3")
+    print(available_ports[3])
+  else:
+    midiout.open_virtual_port("My virtual output")
   
   state0 = R_START
   state1 = R_START
