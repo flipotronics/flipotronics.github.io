@@ -214,10 +214,8 @@ class GPIOListener(object):
             c -= 10
         else:
           if self.pin0.value:
-            print("slow")
             c += 1
           else:
-            print("fast")
             c += 10
         if c < 0:
           c = 0
@@ -242,10 +240,8 @@ class GPIOListener(object):
             c -= 10
         else:
           if self.pin1.value:
-            print("slow")
             c += 1
           else:
-            print("fast")
             c += 10
         if c < 0:
           c = 0
@@ -270,10 +266,8 @@ class GPIOListener(object):
             c -= 10
         else:
           if self.pin2.value:
-            print("slow")
             c += 1
           else:
-            print("fast")
             c += 10
         if c < 0:
           c = 0
@@ -298,10 +292,8 @@ class GPIOListener(object):
             c -= 10
         else:
           if self.pin3.value:
-            print("slow")
             c += 1
           else:
-            print("fast")
             c += 10
         if c < 0:
           c = 0
@@ -326,10 +318,8 @@ class GPIOListener(object):
             c -= 10
         else:
           if self.pin4.value:
-            print("slow")
             c += 1
           else:
-            print("fast")
             c += 10
         if c < 0:
           c = 0
@@ -354,10 +344,8 @@ class GPIOListener(object):
             c -= 10
         else:
           if self.pin5.value:
-            print("slow")
             c += 1
           else:
-            print("fast")
             c += 10
         if c < 0:
           c = 0
@@ -382,10 +370,8 @@ class GPIOListener(object):
             c -= 10
         else:
           if self.pin6.value:
-            print("slow")
             c += 1
           else:
-            print("fast")
             c += 10
         if c < 0:
           c = 0
@@ -410,10 +396,8 @@ class GPIOListener(object):
             c -= 10
         else:
           if self.pin7.value:
-            print("slow")
             c += 1
           else:
-            print("fast")
             c += 10
         if c < 0:
           c = 0

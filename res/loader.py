@@ -5,6 +5,16 @@ import redis
 r = redis.Redis(host='localhost', port=6379, db=0)
 r.set('page',0)
 
+i = 0
+while i < 64:
+  key = "pagename" + str(i)
+  val = "page " + str(i)
+  r.set(key,val)
+  i += 1
+
+# first page
+  r.set('pagename0','Mix 0')
+  
 # setup 0 paramter
 i = 0
 while i < 64 * 8:

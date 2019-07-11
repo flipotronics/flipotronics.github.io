@@ -39,8 +39,10 @@ while running:
     pygame.draw.line(screen,lineCol,(360,0),(360,480))
     pygame.draw.line(screen,lineCol,(540,0),(540,480))
 
-    textsurface = font.render('Page ' + str(page + 1), False, (255, 255, 255))
-    screen.blit(textsurface,(150,185))
+    key = "pagename" + str(page)
+    name = r.get(key)
+    textsurface = font.render(name, False, (255, 255, 255))
+    screen.blit(textsurface,(10,185))
     positions = [0,1,2,3]
     for x in positions:
         key = "param" + str(page * 8 + x)

@@ -29,14 +29,6 @@ class GPIOListener(object):
   mcp.interrupt_enable = 0xFFFF       # INTerrupt ENable top 8 bits
   mcp.interrupt_configuration = 0x0000  
 
-  pin0 = mcp.get_pin(0)  # GPA0
-  pin1 = mcp.get_pin(1)  # GPA1
-  pin2 = mcp.get_pin(2) 
-  pin3 = mcp.get_pin(3) 
-  pin4 = mcp.get_pin(4) 
-  pin5 = mcp.get_pin(5) 
-  pin6 = mcp.get_pin(6) 
-  pin7 = mcp.get_pin(7) 
   pin8 = mcp.get_pin(8) 
   pin9 = mcp.get_pin(9) 
   pin10 = mcp.get_pin(10) 
@@ -45,30 +37,6 @@ class GPIOListener(object):
   pin13 = mcp.get_pin(13) 
   pin14 = mcp.get_pin(14) 
   pin15 = mcp.get_pin(15) 
-
-  pin0.direction = digitalio.Direction.INPUT
-  pin0.pull = digitalio.Pull.UP
-
-  pin1.direction = digitalio.Direction.INPUT
-  pin1.pull = digitalio.Pull.UP
-
-  pin2.direction = digitalio.Direction.INPUT
-  pin2.pull = digitalio.Pull.UP
-
-  pin3.direction = digitalio.Direction.INPUT
-  pin3.pull = digitalio.Pull.UP
-
-  pin4.direction = digitalio.Direction.INPUT
-  pin4.pull = digitalio.Pull.UP
-
-  pin5.direction = digitalio.Direction.INPUT
-  pin5.pull = digitalio.Pull.UP
-
-  pin6.direction = digitalio.Direction.INPUT
-  pin6.pull = digitalio.Pull.UP
-
-  pin7.direction = digitalio.Direction.INPUT
-  pin7.pull = digitalio.Pull.UP
 
   pin8.direction = digitalio.Direction.INPUT
   pin8.pull = digitalio.Pull.UP
@@ -97,39 +65,6 @@ class GPIOListener(object):
   r.set('prog', program)
 
   def my_callback(self, arg):
-
-
-    # Encoder A pressed
-    if not self.pin0.value:
-      print("0")
-    
-    # Encoder B pressed 
-    if not self.pin1.value:
-      print("1")
-
-    # Encoder C pressed
-    if not self.pin2.value:
-      print("2")
-
-    # Encoder D pressed
-    if not self.pin3.value:
-      print("3")
-
-    # Encoder E pressed
-    if not self.pin4.value:
-      print("4")
-
-    # Encoder F pressed
-    if not self.pin5.value:
-      print("5")
-
-    # Encoder G pressed
-    if not self.pin6.value:
-      print("6")
-
-    # Encoder H pressed
-    if not self.pin7.value:
-      print("7")
 
     # Black Page down
     if self.pin8.value:
@@ -171,8 +106,8 @@ class GPIOListener(object):
     if self.pin12.value:
       page = int(self.r.get('page'))
       page += 1
-      if page > 8: 
-        page = 8
+      if page > 63: 
+        page = 63
       print("page", end =" ")
       print(page)
       self.r.set('page',page)
