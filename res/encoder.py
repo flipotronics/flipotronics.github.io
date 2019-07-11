@@ -83,6 +83,40 @@ class GPIOListener(object):
   mcp.interrupt_enable = 0xFFFF       # INTerrupt ENable top 8 bits
   mcp.interrupt_configuration = 0x0000  
 
+  mcp2 = MCP23017(i2c,address=0x20) 
+  pin0 = mcp2.get_pin(3)  
+  pin1 = mcp2.get_pin(2)  
+  pin2 = mcp2.get_pin(1) 
+  pin3 = mcp2.get_pin(0) 
+  pin4 = mcp2.get_pin(4) 
+  pin5 = mcp2.get_pin(5) 
+  pin6 = mcp2.get_pin(6) 
+  pin7 = mcp2.get_pin(7)
+
+  pin0.direction = digitalio.Direction.INPUT
+  pin0.pull = digitalio.Pull.UP
+
+  pin1.direction = digitalio.Direction.INPUT
+  pin1.pull = digitalio.Pull.UP
+
+  pin2.direction = digitalio.Direction.INPUT
+  pin2.pull = digitalio.Pull.UP
+
+  pin3.direction = digitalio.Direction.INPUT
+  pin3.pull = digitalio.Pull.UP
+
+  pin4.direction = digitalio.Direction.INPUT
+  pin4.pull = digitalio.Pull.UP
+
+  pin5.direction = digitalio.Direction.INPUT
+  pin5.pull = digitalio.Pull.UP
+
+  pin6.direction = digitalio.Direction.INPUT
+  pin6.pull = digitalio.Pull.UP
+
+  pin7.direction = digitalio.Direction.INPUT
+  pin7.pull = digitalio.Pull.UP
+
   clk0  = mcp.get_pin(0)
   dt0 = mcp.get_pin(1)
 
@@ -150,15 +184,6 @@ class GPIOListener(object):
   r = redis.Redis(host='localhost', port=6379, db=0)
   r.set('page',0)
 
-  counter0 = 0
-  counter1 = 1
-  counter2 = 2
-  counter3 = 3
-  counter4 = 4
-  counter5 = 5
-  counter6 = 6
-  counter7 = 7
-
   mcp.clear_ints()
 
   def my_callback(self, arg):
@@ -180,18 +205,25 @@ class GPIOListener(object):
       self.state0 = STATE_TAB[self.state0 & 0xf][pinstate]
       result = self.state0 & 0x30
       if result:
-        if result == 32:
-         self.counter0 -= 1
-        else:
-          self.counter0 += 1
-        if self.counter0 < 0:
-          self.counter0 = 0
-        if self.counter0 > 127:
-          self.counter0 = 127
-        print("0", end =" ")
-        print(self.counter0)
         key = "param" + str(page * 8 + 0)
-        self.r.set(key,self.counter0)
+        c = int(self.r.get(key))
+        if result == 32:
+          if self.pin0.value:
+            c -= 1
+          else:
+            c -= 10
+        else:
+          if self.pin0.value:
+            print("slow")
+            c += 1
+          else:
+            print("fast")
+            c += 10
+        if c < 0:
+          c = 0
+        if c > 127:
+          c = 127
+        self.r.set(key,c)
 
     # Encoder 1
     if lp == 2 or lp == 3:
@@ -201,18 +233,25 @@ class GPIOListener(object):
       self.state1 = STATE_TAB[self.state1 & 0xf][pinstate]
       result = self.state1 & 0x30
       if result:
-        if result == 32:
-         self.counter1 -= 1
-        else:
-          self.counter1 += 1
-        if self.counter1 < 0:
-          self.counter1 = 0
-        if self.counter1 > 127:
-          self.counter1 = 127
-        print("1", end =" ")
-        print(self.counter1)
         key = "param" + str(page * 8 + 1)
-        self.r.set(key,self.counter1)
+        c = int(self.r.get(key))
+        if result == 32:
+          if self.pin1.value:
+            c -= 1
+          else:
+            c -= 10
+        else:
+          if self.pin1.value:
+            print("slow")
+            c += 1
+          else:
+            print("fast")
+            c += 10
+        if c < 0:
+          c = 0
+        if c > 127:
+          c = 127
+        self.r.set(key,c)
 
     # Encoder 2
     if lp == 4 or lp == 5:
@@ -222,18 +261,25 @@ class GPIOListener(object):
       self.state2 = STATE_TAB[self.state2 & 0xf][pinstate]
       result = self.state2 & 0x30
       if result:
-        if result == 32:
-         self.counter2 -= 1
-        else:
-          self.counter2 += 1
-        if self.counter2 < 0:
-          self.counter2 = 0
-        if self.counter2 > 127:
-          self.counter2 = 127
-        print("2", end =" ")
-        print(self.counter2)
         key = "param" + str(page * 8 + 2)
-        self.r.set(key,self.counter2)
+        c = int(self.r.get(key))
+        if result == 32:
+          if self.pin2.value:
+            c -= 1
+          else:
+            c -= 10
+        else:
+          if self.pin2.value:
+            print("slow")
+            c += 1
+          else:
+            print("fast")
+            c += 10
+        if c < 0:
+          c = 0
+        if c > 127:
+          c = 127
+        self.r.set(key,c)
 
     # Encoder 3
     if lp == 6 or lp == 7:
@@ -243,18 +289,25 @@ class GPIOListener(object):
       self.state3 = STATE_TAB[self.state3 & 0xf][pinstate]
       result = self.state3 & 0x30
       if result:
-        if result == 32:
-         self.counter3 -= 1
-        else:
-          self.counter3 += 1
-        if self.counter3 < 0:
-          self.counter3 = 0
-        if self.counter3 > 127:
-          self.counter3 = 127
-        print("3", end =" ")
-        print(self.counter3)
         key = "param" + str(page * 8 + 3)
-        self.r.set(key,self.counter3)
+        c = int(self.r.get(key))
+        if result == 32:
+          if self.pin3.value:
+            c -= 1
+          else:
+            c -= 10
+        else:
+          if self.pin3.value:
+            print("slow")
+            c += 1
+          else:
+            print("fast")
+            c += 10
+        if c < 0:
+          c = 0
+        if c > 127:
+          c = 127
+        self.r.set(key,c)
 
     # Encoder 4
     if lp == 8 or lp == 9:
@@ -264,18 +317,25 @@ class GPIOListener(object):
       self.state4 = STATE_TAB[self.state4 & 0xf][pinstate]
       result = self.state4 & 0x30
       if result:
-        if result == 32:
-         self.counter4 -= 1
-        else:
-          self.counter4 += 1
-        if self.counter4 < 0:
-          self.counter4 = 0
-        if self.counter4 > 127:
-          self.counter4 = 127
-        print("4", end =" ")
-        print(self.counter4)
         key = "param" + str(page * 8 + 4)
-        self.r.set(key,self.counter4)
+        c = int(self.r.get(key))
+        if result == 32:
+          if self.pin4.value:
+            c -= 1
+          else:
+            c -= 10
+        else:
+          if self.pin4.value:
+            print("slow")
+            c += 1
+          else:
+            print("fast")
+            c += 10
+        if c < 0:
+          c = 0
+        if c > 127:
+          c = 127
+        self.r.set(key,c)
 
     # Encoder 5
     if lp == 10 or lp == 11:
@@ -285,18 +345,25 @@ class GPIOListener(object):
       self.state5 = STATE_TAB[self.state5 & 0xf][pinstate]
       result = self.state5 & 0x30
       if result:
-        if result == 32:
-         self.counter5 -= 1
-        else:
-          self.counter5 += 1
-        if self.counter5 < 0:
-          self.counter5 = 0
-        if self.counter5 > 127:
-          self.counter5 = 127
-        print("5", end =" ")
-        print(self.counter5)
         key = "param" + str(page * 8 + 5)
-        self.r.set(key,self.counter5)
+        c = int(self.r.get(key))
+        if result == 32:
+          if self.pin5.value:
+            c -= 1
+          else:
+            c -= 10
+        else:
+          if self.pin5.value:
+            print("slow")
+            c += 1
+          else:
+            print("fast")
+            c += 10
+        if c < 0:
+          c = 0
+        if c > 127:
+          c = 127
+        self.r.set(key,c)
 
     # Encoder 6
     if lp == 12 or lp == 13:
@@ -306,18 +373,25 @@ class GPIOListener(object):
       self.state6 = STATE_TAB[self.state6 & 0xf][pinstate]
       result = self.state6 & 0x30
       if result:
-        if result == 32:
-         self.counter6 -= 1
-        else:
-          self.counter6 += 1
-        if self.counter6 < 0:
-          self.counter6 = 0
-        if self.counter6 > 127:
-          self.counter6 = 127
-        print("6", end =" ")
-        print(self.counter6)
         key = "param" + str(page * 8 + 6)
-        self.r.set(key,self.counter6)
+        c = int(self.r.get(key))
+        if result == 32:
+          if self.pin6.value:
+            c -= 1
+          else:
+            c -= 10
+        else:
+          if self.pin6.value:
+            print("slow")
+            c += 1
+          else:
+            print("fast")
+            c += 10
+        if c < 0:
+          c = 0
+        if c > 127:
+          c = 127
+        self.r.set(key,c)
 
     # Encoder 7
     if lp == 14 or lp == 15:
@@ -327,21 +401,27 @@ class GPIOListener(object):
       self.state7 = STATE_TAB[self.state7 & 0xf][pinstate]
       result = self.state7 & 0x30
       if result:
-        if result == 32:
-         self.counter7 -= 1
-        else:
-          self.counter7 += 1
-        if self.counter7 < 0:
-          self.counter7 = 0
-        if self.counter7 > 127:
-          self.counter7 = 127
-        print("7", end =" ")
-        print(self.counter7)
         key = "param" + str(page * 8 + 7)
-        self.r.set(key,self.counter7)
+        c = int(self.r.get(key))
+        if result == 32:
+          if self.pin7.value:
+            c -= 1
+          else:
+            c -= 10
+        else:
+          if self.pin7.value:
+            print("slow")
+            c += 1
+          else:
+            print("fast")
+            c += 10
+        if c < 0:
+          c = 0
+        if c > 127:
+          c = 127
+        self.r.set(key,c)
 
     self.mcp.clear_ints() 
-
   
   def __init__(self):
     INT_1A_PIN = 5

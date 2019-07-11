@@ -5,6 +5,7 @@ from pygame.locals import *
 from sys import exit
 import redis
 import math
+import time
 
 r = redis.Redis(host='localhost', port=6379, db=0)
 
@@ -72,8 +73,8 @@ while running:
             pygame.draw.polygon(screen, (255,255,255), p)
 
     pygame.display.update()
-    if mouse[0] > 700:
-      running = False
+    # if mouse[0] > 700:
+      # running = False
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -82,4 +83,6 @@ while running:
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
                 running = False  
-                
+
+
+    time.sleep(0.1)
