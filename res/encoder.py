@@ -7,6 +7,8 @@ import digitalio
 from adafruit_mcp230xx.mcp23017 import MCP23017
 import redis
 import RPi.GPIO as GPIO
+from Adafruit_LED_Backpack import SevenSegment
+
 
 R_CCW_BEGIN   = 0x1
 R_CW_BEGIN    = 0x2
@@ -84,6 +86,8 @@ class GPIOListener(object):
   mcp.interrupt_configuration = 0x0000  
 
   mcp2 = MCP23017(i2c,address=0x20) 
+  mcp2.interrupt_enable = 0xFFFF       # INTerrupt ENable top 8 bits
+  mcp2.interrupt_configuration = 0x0000  
   pin0 = mcp2.get_pin(3)  
   pin1 = mcp2.get_pin(2)  
   pin2 = mcp2.get_pin(1) 
@@ -92,6 +96,14 @@ class GPIOListener(object):
   pin5 = mcp2.get_pin(5) 
   pin6 = mcp2.get_pin(6) 
   pin7 = mcp2.get_pin(7)
+  pin8 = mcp2.get_pin(8) 
+  pin9 = mcp2.get_pin(9) 
+  pin10 = mcp2.get_pin(10) 
+  pin11 = mcp2.get_pin(11) 
+  pin12 = mcp2.get_pin(12) 
+  pin13 = mcp2.get_pin(13) 
+  pin14 = mcp2.get_pin(14) 
+  pin15 = mcp2.get_pin(15) 
 
   pin0.direction = digitalio.Direction.INPUT
   pin0.pull = digitalio.Pull.UP
@@ -116,6 +128,30 @@ class GPIOListener(object):
 
   pin7.direction = digitalio.Direction.INPUT
   pin7.pull = digitalio.Pull.UP
+
+  pin8.direction = digitalio.Direction.INPUT
+  pin8.pull = digitalio.Pull.UP
+
+  pin9.direction = digitalio.Direction.INPUT
+  pin9.pull = digitalio.Pull.UP
+
+  pin10.direction = digitalio.Direction.INPUT
+  pin10.pull = digitalio.Pull.UP
+
+  pin11.direction = digitalio.Direction.INPUT
+  pin11.pull = digitalio.Pull.UP
+
+  pin12.direction = digitalio.Direction.INPUT
+  pin12.pull = digitalio.Pull.UP
+
+  pin13.direction = digitalio.Direction.INPUT
+  pin13.pull = digitalio.Pull.UP
+
+  pin14.direction = digitalio.Direction.INPUT
+  pin14.pull = digitalio.Pull.UP
+
+  pin15.direction = digitalio.Direction.INPUT
+  pin15.pull = digitalio.Pull.UP
 
   clk0  = mcp.get_pin(0)
   dt0 = mcp.get_pin(1)
@@ -184,7 +220,61 @@ class GPIOListener(object):
   r = redis.Redis(host='localhost', port=6379, db=0)
   r.set('page',0)
 
+
   mcp.clear_ints()
+  mcp2.clear_ints()
+
+  def button_callback(self, arg):
+
+    # Black Page down
+    if self.pin8.value:
+      page = int(self.r.get('page'))
+      page -= 1
+      if page < 0: 
+        page = 0
+      print("page", end =" ")
+      print(page)
+      self.r.set('page',page)
+ 
+    # Rot
+    if self.pin9.value:
+      print("9")
+
+      #Program Down
+    if self.pin10.value:
+      print("10")
+      self.program  = int(self.r.get('prog')) - 1
+      if self.program < 1:
+        self.program = 128
+      self.r.set('prog', self.program)
+      prog_change = [0xC0, self.program ]
+      self.midiout.send_message(prog_change)
+      print(self.program)
+
+    # Program Up
+    if self.pin11.value:
+      print("11")
+      self.program = int(self.r.get('prog')) + 1
+      if self.program > 128 :
+        self.program = 1
+      self.r.set('prog', self.program)
+      prog_change = [0xC0, self.program ]
+      self.midiout.send_message(prog_change)
+      print(self.program)
+
+    # Blue - Page up
+    if self.pin12.value:
+      page = int(self.r.get('page'))
+      page += 1
+      if page > 63: 
+        page = 63
+      print("page", end =" ")
+      print(page)
+      self.r.set('page',page)
+
+    # Green
+    if self.pin13.value:
+      print("13")
 
   def my_callback(self, arg):
 
@@ -405,11 +495,15 @@ class GPIOListener(object):
           c = 127
         self.r.set(key,c)
 
-    self.mcp.clear_ints() 
-  
+    self.mcp2.clear_ints() 
+
+
   def __init__(self):
     INT_1A_PIN = 5
     INT_1B_PIN = 6
+    INT_2A_PIN = 13
+    INT_2B_PIN = 19
+
     GPIO.setup(INT_1A_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     GPIO.add_event_detect(INT_1A_PIN, GPIO.FALLING)
     GPIO.add_event_callback(INT_1A_PIN, self.my_callback)
@@ -417,6 +511,23 @@ class GPIOListener(object):
     GPIO.add_event_detect(INT_1B_PIN, GPIO.FALLING)
     GPIO.add_event_callback(INT_1B_PIN, self.my_callback)
 
+    GPIO.setup(INT_2A_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    GPIO.add_event_detect(INT_2A_PIN, GPIO.FALLING)
+    GPIO.add_event_callback(INT_2A_PIN, self.button_callback)
+
+
 m = GPIOListener()
+display = SevenSegment.SevenSegment()
+display.begin()
+display.clear()
+lastProg = int(m.r.get('prog'))
+display.print_float(lastProg,decimal_digits=0, justify_right=True)
+display.write_display()
 while True:
-  time.sleep(1000)
+    newProg = int(m.r.get('prog'))
+    if newProg != lastProg:
+        display.clear()
+        display.print_float(lastProg,decimal_digits=0, justify_right=True)
+        display.write_display()  
+        lastProg = newProg
+    time.sleep(0.1)
