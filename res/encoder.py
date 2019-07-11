@@ -1,9 +1,10 @@
+#!/usr/bin/env python3
+
 import time
 import board
 import busio
 import digitalio
 from adafruit_mcp230xx.mcp23017 import MCP23017
-import rtmidi
 import redis
 import RPi.GPIO as GPIO
 
@@ -27,8 +28,6 @@ R_CW_NEXT   = 0x3
 R_CCW_BEGIN = 0x4
 R_CCW_FINAL = 0x5
 R_CCW_NEXT  = 0x6
-
-state = R_START
 
 HALF_TAB = (
   # R_START (00)
@@ -65,38 +64,25 @@ FULL_TAB = (
 # Enable this to emit codes twice per step.
 # HALF_STEP == True: emits a code at 00 and 11
 # HALF_STEP == False: emits a code at 00 only
-HALF_STEP     = False
+HALF_STEP     = True
 STATE_TAB = HALF_TAB if HALF_STEP else FULL_TAB
 
 class GPIOListener(object):
   
-  state = R_START
-  midiout = rtmidi.MidiOut()
-  available_ports = midiout.get_ports()
-  print(available_ports)
-
-  if available_ports:
-    midiout.open_port(3)
-    print("Opened port 3")
-    print(available_ports[3])
-  else:
-    midiout.open_virtual_port("My virtual output")
+  state0 = R_START
+  state1 = R_START
+  state2 = R_START
+  state3 = R_START
+  state4 = R_START
+  state5 = R_START
+  state6 = R_START
+  state7 = R_START
 
   i2c = busio.I2C(board.SCL, board.SDA)
-  mcp = MCP23017(i2c,address=0x20)  # MCP23017
-
+  mcp = MCP23017(i2c,address=0x21)  # MCP23017
   mcp.interrupt_enable = 0xFFFF       # INTerrupt ENable top 8 bits
   mcp.interrupt_configuration = 0x0000  
 
-
-  i2c = busio.I2C(board.SCL, board.SDA)
-  mcp = MCP23017(i2c,address=0x20)  # MCP23017
-
-  mcp.interrupt_enable = 0xFFFF       # INTerrupt ENable top 8 bits
-  mcp.interrupt_configuration = 0x0000  
-
-  #mcp = MCP23017(i2c, address=0x21)  # MCP23017 w/ A0 set
-  # 0 to 15 for the GPIOA0...GPIOA7, GPIOB0...GPIOB7 pins (i.e. pin 12 is GPIOB4).
   clk0  = mcp.get_pin(0)
   dt0 = mcp.get_pin(1)
 
@@ -161,107 +147,212 @@ class GPIOListener(object):
   dt7.direction = digitalio.Direction.INPUT
   dt7.pull = digitalio.Pull.UP
 
-  counter0 = 0
-  counter1 = 0
-  counter2 = 0
-  counter3 = 0
-  counter4 = 0
-  counter5 = 0
-  counter6 = 0
-  counter7 = 0
-
-  clkLastState0 = clk0.value
-  clkLastState1 = clk1.value
-  clkLastState2 = clk2.value
-  clkLastState3 = clk3.value
-  clkLastState4 = clk4.value
-  clkLastState5 = clk5.value
-  clkLastState6 = clk6.value
-  clkLastState7 = clk7.value
   r = redis.Redis(host='localhost', port=6379, db=0)
+  r.set('page',0)
 
-  program = 0
-  last_state = 0
+  counter0 = 0
+  counter1 = 1
+  counter2 = 2
+  counter3 = 3
+  counter4 = 4
+  counter5 = 5
+  counter6 = 6
+  counter7 = 7
+
+  mcp.clear_ints()
 
   def my_callback(self, arg):
 
-    # Encoder A0
-    if arg == 5:
-      pinstate = (self.clk3.value << 1) | self.dt3.value
-      self.state = STATE_TAB[self.state & 0xf][pinstate]
-      result = self.state & 0x30
+    page = int(self.r.get('page'))
+
+    if not self.mcp.int_flag:
+      self.mcp.clear_ints()
+      return
+
+    lp = self.mcp.int_flag[0]
+    # print(lp)
+
+    # Encoder 0
+    if lp == 0 or lp == 1:
+      dt0 = not self.dt0.value
+      clk0 = not self.clk0.value
+      pinstate = (clk0 << 1) | dt0
+      self.state0 = STATE_TAB[self.state0 & 0xf][pinstate]
+      result = self.state0 & 0x30
       if result:
         if result == 32:
-          self.program = self.program - 1
-          if self.program < 1:
-            self.program = 128
+         self.counter0 -= 1
         else:
-          self.program = self.program + 1
-          if self.program > 128:
-            self.program = 1
-        self.r.set('prog', self.program)
-        prog_change = [0xC0, self.program ]
-        self.midiout.send_message(prog_change)
-        print(self.program)
-       # time.sleep(0.05)
+          self.counter0 += 1
+        if self.counter0 < 0:
+          self.counter0 = 0
+        if self.counter0 > 127:
+          self.counter0 = 127
+        print("0", end =" ")
+        print(self.counter0)
+        key = "param" + str(page * 8 + 0)
+        self.r.set(key,self.counter0)
 
-    # Encoder A1
-    # Encoder A2
-    # Encoder A3
+    # Encoder 1
+    if lp == 2 or lp == 3:
+      dt = not self.dt1.value
+      clk = not self.clk1.value
+      pinstate = (clk << 1) | dt
+      self.state1 = STATE_TAB[self.state1 & 0xf][pinstate]
+      result = self.state1 & 0x30
+      if result:
+        if result == 32:
+         self.counter1 -= 1
+        else:
+          self.counter1 += 1
+        if self.counter1 < 0:
+          self.counter1 = 0
+        if self.counter1 > 127:
+          self.counter1 = 127
+        print("1", end =" ")
+        print(self.counter1)
+        key = "param" + str(page * 8 + 1)
+        self.r.set(key,self.counter1)
 
-    # Encoder B0
-    # Encoder B1
-    # Encoder B2
-    # Encoder B3
+    # Encoder 2
+    if lp == 4 or lp == 5:
+      dt = not self.dt2.value
+      clk = not self.clk2.value
+      pinstate = (clk << 1) | dt
+      self.state2 = STATE_TAB[self.state2 & 0xf][pinstate]
+      result = self.state2 & 0x30
+      if result:
+        if result == 32:
+         self.counter2 -= 1
+        else:
+          self.counter2 += 1
+        if self.counter2 < 0:
+          self.counter2 = 0
+        if self.counter2 > 127:
+          self.counter2 = 127
+        print("2", end =" ")
+        print(self.counter2)
+        key = "param" + str(page * 8 + 2)
+        self.r.set(key,self.counter2)
 
-    # Button A0
-    # Button A1
-    # Button A2
-    # Button A3
+    # Encoder 3
+    if lp == 6 or lp == 7:
+      dt = not self.dt3.value
+      clk = not self.clk3.value
+      pinstate = (clk << 1) | dt
+      self.state3 = STATE_TAB[self.state3 & 0xf][pinstate]
+      result = self.state3 & 0x30
+      if result:
+        if result == 32:
+         self.counter3 -= 1
+        else:
+          self.counter3 += 1
+        if self.counter3 < 0:
+          self.counter3 = 0
+        if self.counter3 > 127:
+          self.counter3 = 127
+        print("3", end =" ")
+        print(self.counter3)
+        key = "param" + str(page * 8 + 3)
+        self.r.set(key,self.counter3)
 
-    # Button B0
-    # Button B1
-    # Button B2
-    # Button B3
+    # Encoder 4
+    if lp == 8 or lp == 9:
+      dt = not self.dt4.value
+      clk = not self.clk4.value
+      pinstate = (clk << 1) | dt
+      self.state4 = STATE_TAB[self.state4 & 0xf][pinstate]
+      result = self.state4 & 0x30
+      if result:
+        if result == 32:
+         self.counter4 -= 1
+        else:
+          self.counter4 += 1
+        if self.counter4 < 0:
+          self.counter4 = 0
+        if self.counter4 > 127:
+          self.counter4 = 127
+        print("4", end =" ")
+        print(self.counter4)
+        key = "param" + str(page * 8 + 4)
+        self.r.set(key,self.counter4)
 
+    # Encoder 5
+    if lp == 10 or lp == 11:
+      dt = not self.dt5.value
+      clk = not self.clk5.value
+      pinstate = (clk << 1) | dt
+      self.state5 = STATE_TAB[self.state5 & 0xf][pinstate]
+      result = self.state5 & 0x30
+      if result:
+        if result == 32:
+         self.counter5 -= 1
+        else:
+          self.counter5 += 1
+        if self.counter5 < 0:
+          self.counter5 = 0
+        if self.counter5 > 127:
+          self.counter5 = 127
+        print("5", end =" ")
+        print(self.counter5)
+        key = "param" + str(page * 8 + 5)
+        self.r.set(key,self.counter5)
 
-        
+    # Encoder 6
+    if lp == 12 or lp == 13:
+      dt = not self.dt6.value
+      clk = not self.clk6.value
+      pinstate = (clk << 1) | dt
+      self.state6 = STATE_TAB[self.state6 & 0xf][pinstate]
+      result = self.state6 & 0x30
+      if result:
+        if result == 32:
+         self.counter6 -= 1
+        else:
+          self.counter6 += 1
+        if self.counter6 < 0:
+          self.counter6 = 0
+        if self.counter6 > 127:
+          self.counter6 = 127
+        print("6", end =" ")
+        print(self.counter6)
+        key = "param" + str(page * 8 + 6)
+        self.r.set(key,self.counter6)
+
+    # Encoder 7
+    if lp == 14 or lp == 15:
+      dt = not self.dt7.value
+      clk = not self.clk7.value
+      pinstate = (clk << 1) | dt
+      self.state7 = STATE_TAB[self.state7 & 0xf][pinstate]
+      result = self.state7 & 0x30
+      if result:
+        if result == 32:
+         self.counter7 -= 1
+        else:
+          self.counter7 += 1
+        if self.counter7 < 0:
+          self.counter7 = 0
+        if self.counter7 > 127:
+          self.counter7 = 127
+        print("7", end =" ")
+        print(self.counter7)
+        key = "param" + str(page * 8 + 7)
+        self.r.set(key,self.counter7)
+
+    self.mcp.clear_ints() 
+
+  
   def __init__(self):
-
-      # print(GPIO.getmode()). -1=UNSET, 11=BCM, 10=BOARD
     INT_1A_PIN = 5
     INT_1B_PIN = 6
-    INT_2A_PIN = 13
-    INT_2B_PIN = 19
-    RESET_PIN = 26
-
-    GPIO.setup(INT_1A_PIN, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-    GPIO.setup(INT_1B_PIN, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-    GPIO.setup(INT_2A_PIN, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-    GPIO.setup(INT_2B_PIN, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-    GPIO.setup(RESET_PIN, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-
+    GPIO.setup(INT_1A_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     GPIO.add_event_detect(INT_1A_PIN, GPIO.FALLING)
-    GPIO.add_event_detect(INT_1B_PIN, GPIO.FALLING)
-    GPIO.add_event_detect(INT_2A_PIN, GPIO.FALLING)
-    GPIO.add_event_detect(INT_2B_PIN, GPIO.FALLING)
-    GPIO.add_event_detect(RESET_PIN, GPIO.FALLING)
-
-
     GPIO.add_event_callback(INT_1A_PIN, self.my_callback)
+    GPIO.setup(INT_1B_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    GPIO.add_event_detect(INT_1B_PIN, GPIO.FALLING)
     GPIO.add_event_callback(INT_1B_PIN, self.my_callback)
-    GPIO.add_event_callback(INT_2A_PIN, self.my_callback)
-    GPIO.add_event_callback(INT_2B_PIN, self.my_callback)
-    GPIO.add_event_callback(RESET_PIN,  self.my_callback)
-    print("init complete")
-    self.my_callback(5)
-
 
 m = GPIOListener()
-
 while True:
-  time.sleep(1)
-
-
-
-
+  time.sleep(1000)
