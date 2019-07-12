@@ -10,7 +10,6 @@ import rtmidi
 import RPi.GPIO as GPIO
 from Adafruit_LED_Backpack import SevenSegment
 
-
 R_CCW_BEGIN   = 0x1
 R_CW_BEGIN    = 0x2
 R_START_M     = 0x3
@@ -93,11 +92,11 @@ class GPIOListener(object):
   state7 = R_START
 
   i2c = busio.I2C(board.SCL, board.SDA)
-  mcp = MCP23017(i2c,address=0x21)  # MCP23017
+  mcp = MCP23017(i2c,address=0x20)  # MCP23017
   mcp.interrupt_enable = 0xFFFF       # INTerrupt ENable top 8 bits
   mcp.interrupt_configuration = 0x0000  
 
-  mcp2 = MCP23017(i2c,address=0x20) 
+  mcp2 = MCP23017(i2c,address=0x21) 
   mcp2.interrupt_enable = 0xFFFF       # INTerrupt ENable top 8 bits
   mcp2.interrupt_configuration = 0x0000  
   pin0 = mcp2.get_pin(3)  
@@ -284,9 +283,17 @@ class GPIOListener(object):
       print(page)
       self.r.set('page',page)
 
-    # Green
     if self.pin13.value:
       print("13")
+
+        # Green
+    if self.pin14.value:
+      print("14")
+
+        # Green
+    if self.pin15.value:
+      print("15")
+
 
   def my_callback(self, arg):
 
@@ -511,10 +518,10 @@ class GPIOListener(object):
 
 
   def __init__(self):
-    INT_1A_PIN = 5
-    INT_1B_PIN = 6
-    INT_2A_PIN = 13
-    INT_2B_PIN = 19
+    INT_1A_PIN = 13 #5
+    INT_1B_PIN = 19 # 6
+    INT_2A_PIN = 5 #13
+    INT_2B_PIN = 6 #19
 
     GPIO.setup(INT_1A_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     GPIO.add_event_detect(INT_1A_PIN, GPIO.FALLING)
@@ -539,7 +546,8 @@ while True:
     newProg = int(m.r.get('prog'))
     if newProg != lastProg:
         display.clear()
-        display.print_float(lastProg,decimal_digits=0, justify_right=True)
+        display.print_float(lastProg + 1,decimal_digits=0, justify_right=True)
         display.write_display()  
         lastProg = newProg
     time.sleep(0.1)
+
