@@ -145,6 +145,19 @@ class Param:
   	cnx.commit()
   	cursor.close()
   	cnx.close()
+
+class Patch:
+
+  id = 0
+  uid = 0
+  bankId = 0
+  categoryId = 0
+  name = ""
+  paramcount = 0
+
+
+  def loadPatch(self, patchId ):
+
   	
 
 
@@ -160,6 +173,8 @@ if __name__ == '__main__':
   param = params[0]
   param.name = "NEW"
   entity.update(param)
+
+
 
 
 

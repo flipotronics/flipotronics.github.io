@@ -9,6 +9,10 @@ import redis
 import rtmidi
 import RPi.GPIO as GPIO
 from Adafruit_LED_Backpack import SevenSegment
+from entity import * 
+
+
+FAST = 5
 
 R_CCW_BEGIN   = 0x1
 R_CW_BEGIN    = 0x2
@@ -30,6 +34,7 @@ R_CW_NEXT   = 0x3
 R_CCW_BEGIN = 0x4
 R_CCW_FINAL = 0x5
 R_CCW_NEXT  = 0x6
+
 
 HALF_TAB = (
   # R_START (00)
@@ -71,6 +76,26 @@ STATE_TAB = HALF_TAB if HALF_STEP else FULL_TAB
 
 class GPIOListener(object):
 
+  def setParam(self, uid, val,pin):
+    key = "param" + str(uid)
+    c = int(127 * float(self.r.get(key)))
+    if val>0:
+      if pin.value:
+        c -= 1
+      else:
+        c -= FAST
+    else:
+      if pin.value:
+        c += 1
+      else:
+        c += FAST
+    if c < 0:
+      c = 0
+    if c > 127:
+      c = 127
+    self.r.set(key,float(c/127.0))
+
+  params = []
   midiout = rtmidi.MidiOut()
   available_ports = midiout.get_ports()
   print(available_ports)
@@ -229,8 +254,17 @@ class GPIOListener(object):
   dt7.pull = digitalio.Pull.UP
 
   r = redis.Redis(host='localhost', port=6379, db=0)
-  r.set('page',0)
+  program = int(r.get('prog'))
+  prog_change = [0xC0, program]
+  midiout.send_message(prog_change)
 
+  entity = Param()
+  params = entity.select(0)
+  for p in params:
+    print(p)
+    key = "param" + str(p.uid)
+    val = p.val
+    r.set(key,val)
 
   mcp.clear_ints()
   mcp2.clear_ints()
@@ -254,24 +288,26 @@ class GPIOListener(object):
       #Program Down
     if self.pin10.value:
       print("10")
-      self.program  = int(self.r.get('prog')) - 1
-      if self.program < 1:
-        self.program = 128
-      self.r.set('prog', self.program)
-      prog_change = [0xC0, self.program ]
+      program  = int(self.r.get('prog'))
+      program -= 1
+      if program < 0:
+        program = 127
+      self.r.set('prog', program)
+      prog_change = [0xC0, program ]
       self.midiout.send_message(prog_change)
-      print(self.program)
+      print(program)
 
     # Program Up
     if self.pin11.value:
       print("11")
-      self.program = int(self.r.get('prog')) + 1
-      if self.program > 128 :
-        self.program = 1
-      self.r.set('prog', self.program)
-      prog_change = [0xC0, self.program ]
+      program = int(self.r.get('prog'))
+      program += 1 
+      if program > 127 :
+        program = 0
+      self.r.set('prog', program)
+      prog_change = [0xC0, program ]
       self.midiout.send_message(prog_change)
-      print(self.program)
+      print(program)
 
     # Blue - Page up
     if self.pin12.value:
@@ -308,29 +344,16 @@ class GPIOListener(object):
 
     # Encoder 0
     if lp == 0 or lp == 1:
-      dt0 = not self.dt0.value
-      clk0 = not self.clk0.value
-      pinstate = (clk0 << 1) | dt0
+      dt = not self.dt0.value
+      clk = not self.clk0.value
+      pinstate = (clk << 1) | dt
       self.state0 = STATE_TAB[self.state0 & 0xf][pinstate]
       result = self.state0 & 0x30
       if result:
-        key = "param" + str(page * 8 + 0)
-        c = int(self.r.get(key))
         if result == 32:
-          if self.pin0.value:
-            c -= 1
-          else:
-            c -= 10
+          self.setParam(page * 8 + 0, 1,self.pin0)
         else:
-          if self.pin0.value:
-            c += 1
-          else:
-            c += 10
-        if c < 0:
-          c = 0
-        if c > 127:
-          c = 127
-        self.r.set(key,c)
+          self.setParam(page * 8 + 0,-1,self.pin0)
 
     # Encoder 1
     if lp == 2 or lp == 3:
@@ -340,23 +363,10 @@ class GPIOListener(object):
       self.state1 = STATE_TAB[self.state1 & 0xf][pinstate]
       result = self.state1 & 0x30
       if result:
-        key = "param" + str(page * 8 + 1)
-        c = int(self.r.get(key))
         if result == 32:
-          if self.pin1.value:
-            c -= 1
-          else:
-            c -= 10
+          self.setParam(page * 8 + 1, 1,self.pin1)
         else:
-          if self.pin1.value:
-            c += 1
-          else:
-            c += 10
-        if c < 0:
-          c = 0
-        if c > 127:
-          c = 127
-        self.r.set(key,c)
+          self.setParam(page * 8 + 1,-1,self.pin1)
 
     # Encoder 2
     if lp == 4 or lp == 5:
@@ -366,23 +376,10 @@ class GPIOListener(object):
       self.state2 = STATE_TAB[self.state2 & 0xf][pinstate]
       result = self.state2 & 0x30
       if result:
-        key = "param" + str(page * 8 + 2)
-        c = int(self.r.get(key))
         if result == 32:
-          if self.pin2.value:
-            c -= 1
-          else:
-            c -= 10
+          self.setParam(page * 8 + 2, 1,self.pin2)
         else:
-          if self.pin2.value:
-            c += 1
-          else:
-            c += 10
-        if c < 0:
-          c = 0
-        if c > 127:
-          c = 127
-        self.r.set(key,c)
+          self.setParam(page * 8 + 2 ,-1,self.pin2)
 
     # Encoder 3
     if lp == 6 or lp == 7:
@@ -392,23 +389,10 @@ class GPIOListener(object):
       self.state3 = STATE_TAB[self.state3 & 0xf][pinstate]
       result = self.state3 & 0x30
       if result:
-        key = "param" + str(page * 8 + 3)
-        c = int(self.r.get(key))
         if result == 32:
-          if self.pin3.value:
-            c -= 1
-          else:
-            c -= 10
+          self.setParam(page * 8 + 3, 1,self.pin3)
         else:
-          if self.pin3.value:
-            c += 1
-          else:
-            c += 10
-        if c < 0:
-          c = 0
-        if c > 127:
-          c = 127
-        self.r.set(key,c)
+          self.setParam(page * 8 + 3 ,-1,self.pin3)
 
     # Encoder 4
     if lp == 8 or lp == 9:
@@ -418,23 +402,10 @@ class GPIOListener(object):
       self.state4 = STATE_TAB[self.state4 & 0xf][pinstate]
       result = self.state4 & 0x30
       if result:
-        key = "param" + str(page * 8 + 4)
-        c = int(self.r.get(key))
         if result == 32:
-          if self.pin4.value:
-            c -= 1
-          else:
-            c -= 10
+          self.setParam(page * 8 + 4, 1,self.pin4)
         else:
-          if self.pin4.value:
-            c += 1
-          else:
-            c += 10
-        if c < 0:
-          c = 0
-        if c > 127:
-          c = 127
-        self.r.set(key,c)
+          self.setParam(page * 8 + 4 ,-1,self.pin4)
 
     # Encoder 5
     if lp == 10 or lp == 11:
@@ -444,23 +415,10 @@ class GPIOListener(object):
       self.state5 = STATE_TAB[self.state5 & 0xf][pinstate]
       result = self.state5 & 0x30
       if result:
-        key = "param" + str(page * 8 + 5)
-        c = int(self.r.get(key))
         if result == 32:
-          if self.pin5.value:
-            c -= 1
-          else:
-            c -= 10
+          self.setParam(page * 8 + 5, 1,self.pin5)
         else:
-          if self.pin5.value:
-            c += 1
-          else:
-            c += 10
-        if c < 0:
-          c = 0
-        if c > 127:
-          c = 127
-        self.r.set(key,c)
+          self.setParam(page * 8 + 5 ,-1,self.pin5)
 
     # Encoder 6
     if lp == 12 or lp == 13:
@@ -470,23 +428,10 @@ class GPIOListener(object):
       self.state6 = STATE_TAB[self.state6 & 0xf][pinstate]
       result = self.state6 & 0x30
       if result:
-        key = "param" + str(page * 8 + 6)
-        c = int(self.r.get(key))
         if result == 32:
-          if self.pin6.value:
-            c -= 1
-          else:
-            c -= 10
+          self.setParam(page * 8 + 6, 1,self.pin6)
         else:
-          if self.pin6.value:
-            c += 1
-          else:
-            c += 10
-        if c < 0:
-          c = 0
-        if c > 127:
-          c = 127
-        self.r.set(key,c)
+          self.setParam(page * 8 + 6 ,-1,self.pin6)
 
     # Encoder 7
     if lp == 14 or lp == 15:
@@ -496,23 +441,10 @@ class GPIOListener(object):
       self.state7 = STATE_TAB[self.state7 & 0xf][pinstate]
       result = self.state7 & 0x30
       if result:
-        key = "param" + str(page * 8 + 7)
-        c = int(self.r.get(key))
         if result == 32:
-          if self.pin7.value:
-            c -= 1
-          else:
-            c -= 10
+          self.setParam(page * 8 + 7, 1,self.pin7)
         else:
-          if self.pin7.value:
-            c += 1
-          else:
-            c += 10
-        if c < 0:
-          c = 0
-        if c > 127:
-          c = 127
-        self.r.set(key,c)
+          self.setParam(page * 8 + 7 ,-1,self.pin7)
 
     self.mcp2.clear_ints() 
 
@@ -540,14 +472,13 @@ display = SevenSegment.SevenSegment()
 display.begin()
 display.clear()
 lastProg = int(m.r.get('prog'))
-display.print_float(lastProg,decimal_digits=0, justify_right=True)
+display.print_float(lastProg + 1,decimal_digits=0, justify_right=True)
 display.write_display()
 while True:
     newProg = int(m.r.get('prog'))
     if newProg != lastProg:
         display.clear()
-        display.print_float(lastProg + 1,decimal_digits=0, justify_right=True)
+        display.print_float(newProg + 1,decimal_digits=0, justify_right=True)
         display.write_display()  
         lastProg = newProg
     time.sleep(0.1)
-
